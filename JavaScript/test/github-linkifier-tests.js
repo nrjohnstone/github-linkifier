@@ -18,6 +18,7 @@ TestCase("replaceComments", {
          </div>
          */
 
+        CheckTargetProcessNumber("");
         // Act
         replaceComments(document);
 

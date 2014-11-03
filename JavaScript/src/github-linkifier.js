@@ -1,6 +1,13 @@
-/**
- * Created by Nathan Johnstone on 26/10/2014.
- */
+// ==UserScript==
+// @name         Github Linkifier
+// @namespace
+// @version      0.1
+// @description
+// @author       Nathan Johnstone
+// @include      https://github.com/*/pull/*
+// @grant        none
+// ==/UserScript==
+/* global unsafeWindow */
 
 String.format = function(string)
 {
@@ -11,8 +18,8 @@ String.format = function(string)
 };
 
 /*
-* Split a text string by occurrences of the regular expression for
-* target process numbers
+ * Split a text string by occurrences of the regular expression for
+ * target process numbers
  */
 function splitTextByTargetProcessNumbers(text)
 {
@@ -27,8 +34,8 @@ function splitTextByTargetProcessNumbers(text)
 };
 
 /*
-* Return a link element with an href to the specified target process
-* numbers and the innerHTML text set to TP with the type and number
+ * Return a link element with an href to the specified target process
+ * numbers and the innerHTML text set to TP with the type and number
  */
 function createTargetProcessLink(tpType, tpNumber)
 {
@@ -41,11 +48,11 @@ function createTargetProcessLink(tpType, tpNumber)
 };
 
 /*
-* Check if the text is a target process number and return information
-* as an object with the following
-* - isTargetProcessNumber
-* - tpType
-* - tpNumber
+ * Check if the text is a target process number and return information
+ * as an object with the following
+ * - isTargetProcessNumber
+ * - tpType
+ * - tpNumber
  */
 function CheckTargetProcessNumber(text)
 {
@@ -69,7 +76,7 @@ function CheckTargetProcessNumber(text)
 };
 
 /*
-* Append a target process hyperlink as a child of the span
+ * Append a target process hyperlink as a child of the span
  */
 function appendTargetProcessLink(span, tpResult)
 {
@@ -85,7 +92,7 @@ function appendTargetProcessLink(span, tpResult)
 };
 
 /*
-* Create a span with the text and append as a child of the span
+ * Create a span with the text and append as a child of the span
  */
 function appendTextAsSpan(span, text)
 {
@@ -199,10 +206,18 @@ function replaceComments(doc)
 
 };
 
-(function(unsafeWindow) {
+
+(function (unsafeWindow) {
 
     function init()
     {
-
+        replaceJsIssueTitle(document);
+        replaceComments(document);
     };
-});
+
+    init();
+
+    // on pjax;
+    unsafeWindow.$(document).on("pjax:end", init);  // `pjax:end` also runs on history back;
+
+})(typeof unsafeWindow !== "undefined" ? unsafeWindow : window);
