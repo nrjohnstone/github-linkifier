@@ -185,7 +185,33 @@ TestCase("replaceComments", {
         var tplinks = document.querySelectorAll(".tp123456");
 
         assertEquals(2, tplinks.length);
+    },
+    "test when comment has line breaks should preserve line breaks": function () {
+        /*:DOC +=
+         <div class="comment-content">
+         <div class="edit-comment-hide">
+         <div class="comment-body markdown-body markdown-format js-comment-body">
+         <p>TPT106776 SomeIssue<br>
+         TPU103827 SomeMoreStuff<br>
+         TPF103826 BlahBlah</p>
+         </div>
+         </div>
+         </div>
+         */
+
+        // Act
+        replaceComments(document);
+
+        // Assert
+        var targetParagraph = document.querySelector(".comment-body").querySelector("p");
+        var targetSpans = targetParagraph.querySelectorAll("span");
+
+        // The first two spans should have BR elements
+        assertEquals('BR', targetSpans[0].firstElementChild.nodeName);
+        assertEquals('BR', targetSpans[1].firstElementChild.nodeName);
     }
+
+
 });
 
 TestCase("replaceTargetProcessNumbersWithLinksInParagraphTests", {

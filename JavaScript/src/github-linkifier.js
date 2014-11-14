@@ -198,11 +198,12 @@ function replaceComments(doc)
             {
                 var newElement = replaceTargetProcessNumbersWithLinksInParagraph(targetElement);
 
+                newElement.innerHTML = newElement.innerHTML.replace(/\n/g, '<br/>');
                 replaceNode(targetElement, newElement);
             }
-
         }
     }
+
 
 };
 
